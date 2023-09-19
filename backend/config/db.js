@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const conectarDB = async () => {
   try {
-    const connection = await mongoose.connect('mongodb+srv://alfredomontoyacorreo2:juanma4200@cluster0.gjsff5i.mongodb.net/', {
+    const connection = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

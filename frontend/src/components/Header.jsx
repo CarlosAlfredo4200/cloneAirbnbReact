@@ -28,7 +28,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="header-container">
+      <div className="header-container secLogin">
         <div className="header-container-sections">
           <p className="header-container-sections-p">Airbnb your home</p>
           <TbWorld className="header-container-sections-icons"/>

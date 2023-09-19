@@ -1,16 +1,23 @@
-const express = require("express");
-const cors = require('cors');
-const app = express();
-const dotenv = require('dotenv');
-const conectarDB = require('./config/db.js');
+import express from 'express';
 
-const port = 4000;
+import cors from 'cors';
+import dotenv from'dotenv';
+import conectarDB from './config/db.js';
+import userRouter from './routes/RoutesUsers.js';
+
+const app = express();
 app.use(express.json());
+
 dotenv.config();
 
+conectarDB();
+ 
+// Routing
+const port = 4000;
 
-var whitelist = ['http://localhost:5173']
-var corsOptions = {
+
+const whitelist = ['http://localhost:5173']
+const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
@@ -20,19 +27,21 @@ var corsOptions = {
   }
 }
 
-app.get("/test", cors(corsOptions), (req, res, next) => {
-  res.send("Test OK!");
-});
+app.use(cors(corsOptions));
+//Routing
+app.use("/", userRouter);
+ 
+
+// app.get("/test", (req, res, next) => {
+//   res.send("Test OK!");
+// });
 
 
-app.post('/register', cors(corsOptions), (req,res, next) =>{
-    const {name, email, password} = req.body;
-    res.json({name, email, password})
-})
+ 
 
 
 
-conectarDB();
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })

@@ -1,1 +1,0 @@
-MONGO_URI=mongodb+srv://alfredomontoyacorreo2:juanma4200@cluster0.gjsff5i.mongodb.net/
