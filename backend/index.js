@@ -4,9 +4,9 @@ const cors = require("cors");
 const conectarDB = require('./config/db.js');
 const app = express();
 
+const userRoutes = require('./routes/usersRoutes.js');
 
-
-// app.use(express.json());
+app.use(express.json());
 
  
 
@@ -14,28 +14,24 @@ const app = express();
 const port = process.env.PORT;
  
 
+// Configurar CORS
+const whitelist = [process.env.FRONTEND_URL];
 
-const whitelist = ['http://localhost:4000']
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-          } else {
-              callback(new Error('Not allowed by CORS'))
-            }
-          }
-        }
-        
-        //Routing
- 
-        
-        
-        // app.get("/test", (req, res, next) => {
-//   res.send("Test OK!");
-// });
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      // Puede consultar la API
+      callback(null, true);
+    } else {
+      // No esta permitido
+      callback(new Error("Error de Cors"));
+    }
+  },
+};
 
+app.use(cors(corsOptions));
 
-
+app.use('/api/users', userRoutes); 
 
 
 
