@@ -1,47 +1,46 @@
-import express from 'express';
-
-import cors from 'cors';
-import dotenv from'dotenv';
-import conectarDB from './config/db.js';
-import userRouter from './routes/RoutesUsers.js';
-
+require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const conectarDB = require('./config/db.js');
 const app = express();
-app.use(express.json());
 
-dotenv.config();
 
-conectarDB();
+
+// app.use(express.json());
+
  
+
 // Routing
-const port = 4000;
-
-
-const whitelist = ['http://localhost:5173']
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
-app.use(cors(corsOptions));
-//Routing
-app.use("/", userRouter);
+const port = process.env.PORT;
  
 
-// app.get("/test", (req, res, next) => {
+
+const whitelist = ['http://localhost:4000']
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+          } else {
+              callback(new Error('Not allowed by CORS'))
+            }
+          }
+        }
+        
+        //Routing
+ 
+        
+        
+        // app.get("/test", (req, res, next) => {
 //   res.send("Test OK!");
 // });
 
 
- 
 
 
 
 
+
+conectarDB();
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-  })
+  console.log(`Example app listening on port ${port}`)
+})

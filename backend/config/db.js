@@ -1,10 +1,9 @@
-import mongoose from 'mongoose';
+const mongoose =require("mongoose");
 
 const conectarDB = async () => {
   try {
     const connection = await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+    
     });
 
     const url = `${connection.connection.host}:${connection.connection.port}`;
@@ -14,5 +13,5 @@ const conectarDB = async () => {
     process.exit(1);
   }
 };
+module.exports = conectarDB;
 
-export default conectarDB;
