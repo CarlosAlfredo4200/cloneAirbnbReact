@@ -10,11 +10,12 @@ const {
   nuevoPassword,
   perfil,
 } =require("../controllers/UsersControllers.js");
+const {validatorRegister} = require('../Validator/validatorUser.js')
 
 // import checkAuth from "../middleware/checkAuth.js";
 
 // Autenticación, Registro y Confirmación de Usuarios
-router.post("/", RegisterUser); 
+router.post("/", validatorRegister, RegisterUser); 
 
 // Crea un nuevo usuario
 // router.post("/login", autenticar);
