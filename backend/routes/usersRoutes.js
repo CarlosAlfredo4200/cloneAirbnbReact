@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const {validatorRegister} = require('../Validator/validatorUser');
 const {
   Users,
   RegisterUser,
@@ -10,12 +11,12 @@ const {
   nuevoPassword,
   perfil,
 } =require("../controllers/UsersControllers.js");
-const {validatorRegister} = require('../Validator/validatorUser.js')
 
 // import checkAuth from "../middleware/checkAuth.js";
 
 // Autenticación, Registro y Confirmación de Usuarios
 router.post("/", validatorRegister, RegisterUser); 
+router.post("/login", autenticar); 
 
 // Crea un nuevo usuario
 // router.post("/login", autenticar);

@@ -2,3 +2,8 @@ MONGODB_URI=mongodb+srv://root:juanma4200@cluster0.pmfn1wi.mongodb.net/
 PORT=4000
 
 FRONTEND_URL=http://localhost:5173
+
+
+
+
+registrar usuario = post: http://localhost:4000/api/users

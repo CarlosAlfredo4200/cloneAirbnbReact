@@ -1,29 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../components/Alert";
 
 import axios from "axios";
-console.log(import.meta.env.VITE_BACKENDURL);
+// console.log(import.meta.env.VITE_BACKENDURL);
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [alert, setAlert] = useState({});
-  
+
+  // Agregar un efecto para cerrar la alerta después de 5 segundos
+  useEffect(() => {
+    if (alert.msg) {
+      const timer = setTimeout(() => {
+        setAlert({});
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [alert]);
   const registerUser = async (e) => {
     e.preventDefault();
-     
-    
-
-    if ([name, email, password, repeatPassword].includes("")) {
-      setAlert({
-        msg: "Todos los campos son obligatorios!",
-        error: true,
-      });
-      return;
-    }
-
     if (password !== repeatPassword) {
       setAlert({
         msg: "Los password deben ser iguales!",
@@ -31,42 +30,42 @@ const RegisterPage = () => {
       });
       return;
     }
-
-    if (password.length < 6) {
-      setAlert({
-        msg: "Los password deben ser de minimo 6 caracteres",
-        error: true,
-      });
-      return;
-    }
-
-    setAlert({});
+    setAlert({}); // Limpia la alerta al principio de la función
 
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/users`, {
-        name,
-        email,
-        password,
-      });
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKENDURL}/api/users`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       setAlert({
         msg: data.msg,
         error: false,
       });
 
-      setName('');
-      setEmail('');
-      setPassword('');
-      setRepeatPassword('');
+      setName("");
+      setEmail("");
+      setPassword("");
+      setRepeatPassword("");
+
       
     } catch (error) {
-      setAlert({
-        msg: error.response.data.msg,
-        error: true,
-      });
+      if (error.response.data.errors) {
+        setAlert({
+          msg: error.response.data.errors[0].msg,
+          error: true,
+        });
+      } else {
+        setAlert({
+          msg: error.response.data.msg,
+          error: true,
+        });
+      }
     }
-
-    // alert("Registration successful!");
   };
 
   const { msg } = alert;

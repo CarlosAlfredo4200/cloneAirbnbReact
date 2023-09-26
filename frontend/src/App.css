@@ -101,6 +101,37 @@ body {
   margin: 5px;
 }
 
+
+/* ---------------- Alert ----------------------- */
+
+
+/* RegisterPage.css */
+
+/* Estilos de transición para la alerta */
+.alert-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.alert-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.alert-exit {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.alert-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* ----------------  ----------------------- */
+
 .center-border{
   display: flex;
    
